@@ -14,11 +14,3 @@ def login_success(sender, request, user, **kwargs):
 
 #user_logged_in.connect(login_success)
 
-
-@receiver(pre_save, sender = Car)
-def pre_save_car(sender, instance, **kwargs):
-    print(sender, "is going to be stored")
-# messages.success(instance, "has been saved")
-# Note that instance contains the __str__ return type
-    print(instance, " has been saved")
-    

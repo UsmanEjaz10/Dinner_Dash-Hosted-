@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,11 +43,12 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -138,3 +139,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'alie25708@gmail.com'
 EMAIL_HOST_PASSWORD = 'alie25708'
 EMAIL_USE_TLS  = True
+
+MEDIA_URL = 'item_photos/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

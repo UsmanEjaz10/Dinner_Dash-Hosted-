@@ -21,11 +21,14 @@ urlpatterns = [
     # if any url comes with '' (blank) path send it to views.index
     path("", views.index.as_view(), name='home'),
     path("about", views.about.as_view(), name='about'),
-    path("topgrossing", views.car_form.as_view(), name='topgrossing'),
     path("contact", views.contact, name='contact'),
-    path("login", views.login, name="login"),
+    path("login", views.user_login, name="login"),
     path("logout", views.logout_user, name="logout"),
-    path("sendmail", views.sendmail.as_view(), name= "sendmail"),
-    path("addItem", views.add_to_cart.as_view(), name="addItem"),
-    path("cart", views.CartView.as_view(), name="cart_view")
+    path("addItem", views.add_to_cart1, name="addItem"),
+    path("cart", views.view_cart, name="cart_view")
+
+
+
+
+
     ]

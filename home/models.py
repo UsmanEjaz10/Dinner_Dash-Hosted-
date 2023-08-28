@@ -11,31 +11,8 @@ class Issue(models.Model):
 
     def __str__(self) -> str:
         return self.username
-    
-# Model 2------- Car
-class Car(models.Model):
-    car_id = models.IntegerField()
-    model = models.CharField(max_length= 50)
-    version = models.CharField(max_length= 50)
-    model_year= models.IntegerField()
-    price_per_hour = models.IntegerField()
-    class_type = models.CharField(max_length= 10, default="N/A")
-
-    def __str__(self) -> str:
-        return self.model + " " + self.version 
-    
-
-class Email(models.Model):
-    subject = models.CharField(max_length=20)
-    msg  = models.TextField()
-    sender = models.CharField(max_length=20)
-    to = models.CharField(max_length=20)
-
-    def __str__(self) -> str:
-        return self.sender + " " + self.subject
-    
-
-
+ 
+ 
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
