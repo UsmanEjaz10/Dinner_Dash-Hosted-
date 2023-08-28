@@ -1,0 +1,97 @@
+.titleflex{
+    display: flex;
+    padding: 10px;
+    position:absolute;
+    top: 20%;
+    left: 5%;
+    width: 100%;
+}
+
+
+.pitch{
+    width: 500px;
+    top: 50%;
+    left: 10%;
+}
+
+.pitchLinedark{
+    color: black;
+    text-shadow: 30px;
+}
+
+.pitchLinelight{
+    color: aliceblue;
+    text-shadow: 30px;
+    font-size: 56px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.2em;
+
+}
+
+::-webkit-input-placeholder{
+    color: #9a0f39;
+}
+
+::placeholder{
+    color: #9a0f39;
+}
+
+.redcolor {
+    color: #9a0f39;
+}
+
+.redbtn{
+    text-align: center;
+    letter-spacing: .5px;
+    border: 1px solid #9a0f39;
+    display: inline-block;
+    padding: 18px 24px;
+    font-size: 16px;
+    margin-top: 30px;
+}
+
+.transbtn{
+    text-align: center;
+    letter-spacing: .5px;
+    margin-left: 25px;
+    background: none;
+    border: 1px solid #fff;
+    color: aliceblue;
+    display: inline-block;
+    padding: 18px 24px;
+    font-size: 16px;
+}
+
+.transbtn:hover{
+    color: black;
+    background: #fff;
+}
+
+.redbtn:hover{
+    color: #fff;
+    background: #9a0f39;
+}
+
+.alicebluebg{
+    background: aliceblue;
+    border: 1px solid #9a0f39;
+
+}
+
+.pinkcolorbtn{
+    color: #9a0f39;
+}
+
+.pinkcolorbtn:hover{
+    background: #9a0f39;
+    color: #fff;
+}
+
+.activenavbar{
+    background-color: #9a0f39;
+    font-weight: 600;
+}
+
+

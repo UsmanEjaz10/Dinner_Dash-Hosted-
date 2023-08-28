@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Top-Grossing
+{% endblock title %}
+
+{% block body %}
+
+
+<!--Form class form implementation to get the data for a car-->
+<div class = "p-4">
+    <h2 class="text-center">Car Registration Form</h2>
+    <h4 class="text-center text-secondary">Input the data for a car to be registered... </h4>
+<form action="/topgrossing" method ="post"> 
+    {% csrf_token %}
+    {{custom_car_form}}
+    <div class = "text-center">
+    <input type = "submit" value="Submit" class="m-4 redbtn text-center align-content-end">
+    </div>
+</form>
+</div>
+{% endblock body %}

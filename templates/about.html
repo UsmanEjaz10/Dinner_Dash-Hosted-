@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About
+{% endblock title %}
+
+{% block head%}
+<style> 
+.w100{
+    width: 320px;
+  }
+</style>
+{% endblock head %}
+
+{% block body %}
+
+{% if items%}
+<div class="row m-3">
+    {% for item in items%}
+    <div class="col-md-4">
+      <div class="card mb-4 box-shadow">
+        {% if item.photo %}
+        <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap">
+        {% endif%}
+        <div class="card-body">
+            <div class="row mb-3">
+          <h3 class="pinkhead">{{item.title}}</h3>
+            </div>
+            <div class="row mb-4">
+          <p class="card-text">{{ item.description}}</p>
+            </div>
+            <div class="row mb-">
+                <div class="col-md-6">
+          <h5 class="pinkhead">Price: {{item.price}} Rs.</h5>
+                </div>
+                <div class="col-md-6">
+          <h6 class="pinkhead">Quantity: {{item.quantity}}</h6>
+                </div>
+            </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+            <!-- Inside your item detail template -->
+    <form action="/addItem" method="post">
+    {% csrf_token %}
+    <input type="hidden" value="{{item.pk}}" name = "item_id" >
+    <input type="submit" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100" value="Add to Cart">
+  </form>
+</div>
+      </div>
+    </div>
+    {% endfor%}
+{% endif %}
+</div>
+
+<!-- Inside any template -->
+<a href="{% url 'cart_view' %}" class="btn btn-secondary">View Cart</a>
+
+
+{% endblock body %}
