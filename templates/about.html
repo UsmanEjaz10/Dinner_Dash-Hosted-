@@ -7,20 +7,41 @@
 {% block head%}
 <style> 
 .w100{
-    width: 320px;
+    width: 100%;
+  }
+  .item-image {
+    max-width: 400px; 
+    max-height: 200px; 
+    object-fit: cover; }
+
+
+@media (max-width: 768px) {
+    .item-image {
+      max-width: 100%
+        max-height: 150px; 
+    }
   }
 </style>
 {% endblock head %}
 
 {% block body %}
 
+<div class="d-flex justify-content-end">
+  <form action="/about" method = "post" class="m-2 me-1">
+    {% csrf_token %}
+    <input type="text" name="category_name">
+    <input type="submit" value="Search">
+  </form>
+  <a href="{% url 'cart_view' %}" class="btn btn-danger m-2 me-5"><i class="bi bi-cart"></i></a>
+</div>
+
 {% if items%}
-<div class="row m-3">
+<div class="row m-3 mt-1">
     {% for item in items%}
     <div class="col-md-4">
       <div class="card mb-4 box-shadow">
         {% if item.photo %}
-        <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap">
+        <img class="card-img-top item-image" src="{{item.photo.url}}" alt="Card image cap">
         {% endif%}
         <div class="card-body">
             <div class="row mb-3">
@@ -38,17 +59,17 @@
                 </div>
             </div>
           <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
+            <div class="w100">
               <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-center w100">
             <!-- Inside your item detail template -->
-    <form action="/addItem" method="post">
+    <form action="/addItem" method="post" class="w100">
     {% csrf_token %}
     <input type="hidden" value="{{item.pk}}" name = "item_id" >
-    <input type="submit" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100" value="Add to Cart">
+    <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="Add to Cart">
   </form>
 </div>
       </div>
@@ -57,8 +78,7 @@
 {% endif %}
 </div>
 
-<!-- Inside any template -->
-<a href="{% url 'cart_view' %}" class="btn btn-secondary">View Cart</a>
+
 
 
 {% endblock body %}

@@ -120,7 +120,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -129,10 +128,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Added Manually-------------------------------------------------------------------
 
 #----------------------Adding static directories (shows user all u have in static folder with file name.)--------
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    # Note u should not add any sensitive file here.
-]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -140,5 +137,9 @@ EMAIL_HOST_USER = 'alie25708@gmail.com'
 EMAIL_HOST_PASSWORD = 'alie25708'
 EMAIL_USE_TLS  = True
 
-MEDIA_URL = 'item_photos/'
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+LOGIN_URL = '/login'

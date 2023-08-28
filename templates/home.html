@@ -87,20 +87,20 @@
  <div class="carousel-inner">
       
       <div class="carousel-item active">
-        <img src="/static/images/darkhouse.jpg" class="d-block w-100" alt="...">
+        <img src="/static/images/dinner_dash.jpg" class="d-block w-100" alt="...">
         <div class="titleflex">
         <div class="pitch">
-          <h1 class="pitchLinelight">Dream Home Constructions</h1>
+          <h1 class="pitchLinelight">Dinner Dash</h1>
           <button class="redbtn">Discover More</button>
-          <button class=" transbtn">Meet Jack BT</button>
+          <button class=" transbtn">Meet our Team</button>
         </div>
         <br>
         <div class="calculator">
           <form action="/" method="POST">
              {% csrf_token %}
-            <h2 class="white formheading">Plot price Estimation</h2>
+            <h2 class="white formheading">Taste it!!!</h2>
             <hr>
-            <h5 class="white">Get a plot at best values</h5>
+            <h5 class="white">Best food in town</h5>
             <hr>
             {% if zameenRate%}
             <h2 class="white" id="result">Rs.{{zameenRate}}</h2>
@@ -123,93 +123,5 @@
 </div>
 <!--/Carousel-->
 
-
-<div class="album py-5 bg-light">
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <img class="card-img-top" src="/static/images/house1.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h3 class="pinkhead">A new world inside!</h3>
-            <p class="card-text">Elevating spaces with impeccable style. Meet our creative interior design team for a transformative experience!</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <img class="card-img-top" src="/static/images/house4.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h3 class="pinkhead">Design your Exterior!</h3>
-            <p class="card-text">Revitalizing exteriors with stunning aesthetics. Meet our talented team for transformative outdoor designs!</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <img class="card-img-top" src="/static/images/site.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h3 class="pinkhead">Map your House!</h3>
-            <p class="card-text">"Unleashing architectural brilliance for your dream home. Meet our visionary team for captivating house designs!"</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <img class="card-img-top" src="/static/images/helmet.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h3 class="pinkhead">What we use!</h3>
-            <p class="card-text">The ultimate construction tool for efficiency and precision. Meet our game-changing equipment today!</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 ">
-        <div class="card mb-4 box-shadow">
-          <img class="card-img-top" src="/static/images/meetteam1.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h3 class="pinkhead">Hello there! It's us.</h3>
-            <p class="card-text">Building dreams with expertise, precision, and a commitment to quality. Meet our exceptional construction team.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-
-  </div>
-
-
-
-  <script>
-    function clear(){
-      var result = document.getElementById("result");
-      result.value = "";
-    }
-  </script>
   
   {% endblock body %}

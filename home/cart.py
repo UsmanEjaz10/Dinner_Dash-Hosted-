@@ -7,6 +7,7 @@ class Cart:
         self.cart = self.session.get('cart', {})
         
     def add_item(self, item, quantity=1):
+         
         item_id = str(item.id)
         if item_id not in self.cart:
             self.cart[item_id] = {
@@ -16,7 +17,10 @@ class Cart:
             
                 
             }
-        self.cart[item_id]['quantity'] += quantity
+        if item.quantity <= self.cart[item_id]['quantity']:
+            pass
+        else:
+            self.cart[item_id]['quantity'] += quantity
         
         self.save()
 
@@ -51,10 +55,15 @@ class Cart:
     
 
     def create_order(self, user):
-        order = Order.objects.create(user=user, total_amount=self.get_total())
+        order = Order.objects.create(user=user, status = "ordered")
         for item_id, item_data in self.cart.items():
             item = Item.objects.get(id=int(item_id))
-            OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'], price=item.price)
+            print(item_data)
+            item.quantity = item.quantity - int(item_data['quantity'])
+            if item.quantity == 0:
+                item.is_retired = True
+            item.save()
+            OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'])
         self.clear()
         return order
     

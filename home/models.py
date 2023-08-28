@@ -12,7 +12,7 @@ class Issue(models.Model):
     def __str__(self) -> str:
         return self.username
  
- 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
@@ -45,9 +45,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Item, through='OrderItem')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-
+    created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"Order {self.pk} ({self.user.username}) - {self.status}"
+        return f"Order {self.pk} ({self.user.username}) - {self.status}   {self.created_at}"
 
 
 

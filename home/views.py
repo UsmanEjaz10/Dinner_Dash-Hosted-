@@ -21,13 +21,13 @@ from .cart import Cart
 
 class index(View):
         
-    @login_required    
+      
     def post(self, request):
            
             return render(request, 'home.html')
 
     def get(self, request):
-        return render(request, "Login.html")
+        return render(request, "home.html")
 
 
 
@@ -36,56 +36,14 @@ class about(View):
 
     
     def get(self, request):
-        items = Item.objects.filter(is_retired = False)
-        print("i am called")
+        items = Item.objects.all()
+        print("get method called")
         return render(request, 'about.html', {'items' : items})
 
-
-class add_to_cart(View):
-
     def post(self, request):
-        if 'cart' not in request.session:
-            request.session['cart'] = {}
-    
-        item_id  = request.POST['item_id']
-        cart = request.session['cart']
-
-        print(cart.get(item_id, 0))
-
-        cart[item_id] = cart.get(item_id, 0) + 1
-
-        print(cart[item_id], " " , item_id)
-        request.session.modified = True
-    
-        messages.success(request, f'Item has been added into the cart ')
-        item_list = about()
-        response = item_list.get(request)
-        
-        return response
-    
-
-class CartView(View):
-
-    def get(self, request):
-        cart = request.session.get('cart', {})
-    
-        cart_items = []
-        total_price = 0
-    
-        for item_id, quantity in cart.items():
-            item = Item.objects.get(id=item_id)
-            total_item_price = item.price * quantity
-            total_price += total_item_price
-        
-            cart_items.append({
-                'item': item,
-                'quantity': quantity,
-                'total_item_price': total_item_price
-            })
-    
-        return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
-
-
+        category = request.POST['category_name']
+        items = Item.objects.filter(categories = category)
+        return render(request, 'about.html', {'items' : items})
 
 
 
@@ -184,10 +142,13 @@ def add_to_cart1(request):
 
     item_id  = request.POST['item_id']    
     item = Item.objects.get(id=item_id)
-    cart = Cart(request)
-    cart.add_item(item)
-
-    messages.success(request, f'Item has been added into the cart ')
+    if item.is_retired == False:
+        cart = Cart(request)
+        cart.add_item(item)
+        messages.success(request, f'Item has been added into the cart ')
+    else:
+        messages.info(request, "Sorry the item is not available at this moment.")
+    
     item_list = about()
     response = item_list.get(request)
         
@@ -213,7 +174,7 @@ def clear_cart(request):
     return response
 
 
-
+@login_required
 def checkout(request):
     cart = Cart(request)
     total_price = cart.get_total()
@@ -221,7 +182,7 @@ def checkout(request):
         order = cart.create_order(request.user)
         cart.clear()  # Clear the cart after creating the order
         # Implement payment processing here
-        
-        return render(request,'order_detail.html', {'order':order})
+        order.save()
+        return render(request,'order_details.html', {'order':order, 'total_price': total_price})
     else:
-        return redirect('view_cart')
+        return render(request, 'login.html')
