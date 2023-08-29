@@ -1,22 +1,20 @@
 from decimal import Decimal
-from .models import *
+from home.models import Item
+from Order.models import Order, OrderItem
 
 class Cart:
     def __init__(self, request):
         self.session = request.session
         self.cart = self.session.get('cart', {})
-        
-    def add_item(self, item, quantity=1):
-         
+
+    def add_item(self, item, quantity=1):     
         item_id = str(item.pk)
         print(item_id, "has been added to cart")
         if item_id not in self.cart:
             self.cart[item_id] = {
                 'quantity': 0,
                 'price': str(item.price),
-                'title' : str(item.title),
-            
-                
+                'title' : str(item.title),    
             }
         if item.quantity <= self.cart[item_id]['quantity']:
             pass

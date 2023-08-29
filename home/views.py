@@ -4,6 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from django.views import View
 from home.models import *
+from Order.models import Order, OrderItem
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import authenticate, logout, login
 import pickle
@@ -49,24 +50,6 @@ def getItemsByCategory(request):
         categories = Category.objects.all()
         
         return render(request, 'about.html', {'items' : items, 'categories': categories})
-
-
-
-
-
-
-def contact(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        phone = request.POST.get('phone')
-        issue = request.POST.get('issue')
-        Report_Issue = Issue(username=username, phone=phone, issue=issue, date= datetime.today())
-        Report_Issue.save()
-        messages.success(request, 'Your issue has been sent to Admin!')
-        messages.info(request, "If you don't recieve any mail regarding your issue kindly contact at XXXX-XXXXXXX or you can visit the User Handling department from 9.00 - 5.00pm on working days")
-    return render(request, 'contact.html')
-
-
 
 
 
@@ -163,8 +146,7 @@ def checkout(request):
     
     if request.user.is_authenticated and total_price > 0:
         order = cart.create_order(request.user)
-        cart.clear()  # Clear the cart after creating the order
-        # Implement payment processing here
+        cart.clear() 
         order.save()
         return render(request,'order_details.html', {'order':order, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
     else:

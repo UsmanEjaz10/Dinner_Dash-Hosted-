@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Contact
+{% endblock title %}
+
+{% block head%}
+<style>
+    @media (min-width: 1025px) {
+        .h-custom {
+        height: 100vh !important;
+        }
+        }
+</style>
+
+{% endblock head%}
+
+{% block body %}
+
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Order Id</th>
+                <th scope="col">Order Time</th>
+                <th scope="col">Price Rs.</th>
+                <th scope="col">Status</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders%}
+            <tr>
+                <td>{{order.pk}}</td>
+                <td>{{order.created_at}}</td>
+                <td>{{order.total}}</td>      
+                <td>{{order.status}}</td>
+                <td><form action="{% url 'vieworder' %}" method = "post" class="m-2">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{order.pk}}">
+                    <input type="submit" class="btn btn-danger" value="View">
+                  </form><td>
+            </tr>
+            {% endfor%}
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+{% endblock body %}
