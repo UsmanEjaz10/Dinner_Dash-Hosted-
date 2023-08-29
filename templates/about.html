@@ -21,18 +21,36 @@
         max-height: 150px; 
     }
   }
+
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
 </style>
 {% endblock head %}
 
 {% block body %}
 
 <div class="d-flex justify-content-end">
-  <form action="/about" method = "post" class="m-2 me-1">
-    {% csrf_token %}
-    <input type="text" name="category_name">
-    <input type="submit" value="Search">
-  </form>
-  <a href="{% url 'cart_view' %}" class="btn btn-danger m-2 me-5"><i class="bi bi-cart"></i></a>
+  
+    <a class="nav-link  dropdown-toggle mt-3 me-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+    </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    
+    {% if categories%}
+    {% for category in categories %}
+        <li><form action="{% url 'items_by_category'%}" method="post" class="w100">
+          {% csrf_token %}
+          <input type="hidden" value="{{category.pk}}" name = "category_id" >
+          <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="{{category.name}}">
+        </form></li>
+    {% endfor %}
+    {%endif %}
+    <li><a href="{% url 'about' %}" class="btn btn-danger m-2 me-5">All</a>
+    </li>
+</ul>
+
+  <a href="{% url 'cart_view' %}" class="btn btn-danger m-2 me-5 text-center"><i class="bi bi-cart"></i></a>
 </div>
 
 {% if items%}
@@ -59,13 +77,15 @@
                 </div>
             </div>
           <div class="d-flex justify-content-between align-items-center">
-            <div class="w100">
-              <button type="button" class="btn btn-sm btn-outline-secondary pinkcolorbtn w100">More Info</button>
-            </div>
+            <form action="{% url 'itemdetails'%}" method="post" class="w100">
+              {% csrf_token %}
+              <input type="hidden" value="{{item.pk}}" name = "item_id" >
+              <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="More info">
+            </form>
         </div>
     </div>
     <div class="d-flex justify-content-center w100">
-            <!-- Inside your item detail template -->
+           
     <form action="/addItem" method="post" class="w100">
     {% csrf_token %}
     <input type="hidden" value="{{item.pk}}" name = "item_id" >
@@ -75,7 +95,27 @@
       </div>
     </div>
     {% endfor%}
+
+    {% else%}
+    
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="error-template">
+              <h1>
+                  Sorry!</h1>
+              <h2>
+                   No Item available Found</h2>
+              <div class="error-details">
+                  Sorry, the requested category doesn't contain any item at the moment!!!
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
 {% endif %}
+
 </div>
 
 

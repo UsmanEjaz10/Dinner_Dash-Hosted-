@@ -37,14 +37,18 @@ class about(View):
     
     def get(self, request):
         items = Item.objects.all()
+        categories = Category.objects.all()
         print("get method called")
-        return render(request, 'about.html', {'items' : items})
+        return render(request, 'about.html', {'items' : items, 'categories': categories})
 
-    def post(self, request):
-        category = request.POST['category_name']
+   
+def getItemsByCategory(request):
+        id  = request.POST['category_id']
+        category = Category.objects.get(pk = id)
         items = Item.objects.filter(categories = category)
-        return render(request, 'about.html', {'items' : items})
-
+        categories = Category.objects.all()
+        
+        return render(request, 'about.html', {'items' : items, 'categories': categories})
 
 
 
@@ -102,42 +106,6 @@ def logout_user(request):
     return redirect("/login")
 
 
-
-def add_to_cart2(request):
-    item_id  = request.POST['item_id']
-    item = get_object_or_404(Item, pk=item_id)
-
-    user = request.user
- 
-    order, created = Order.objects.get_or_create(user=user, status='ordered')
-    
-    order_item, item_created = OrderItem.objects.get_or_create(order=order, item=item, defaults={'quantity': 1})
-    if not item_created:
-        order_item.quantity += 1
-        order_item.save()
-    
-    messages.success(request, f'Item has been added into the cart ')
-    item_list = about()
-    response = item_list.get(request)
-        
-    return response
-    
-
-
-def view_cart1(request):
-    user = request.user
-    
-    order = Order.objects.get_or_create(user=user, status='ordered')
-    ordered_items = OrderItem.objects.filter(order=order)
-    context = {
-        'order': order,
-        'ordered_items': ordered_items,
-    }
-    return render(request, 'cart.html', context)
-
-
-
-
 def add_to_cart1(request):
 
     item_id  = request.POST['item_id']    
@@ -159,30 +127,71 @@ def view_cart(request):
     cart = Cart(request)
     cart_items = cart.get_items()
     total_price = cart.get_total()
-    for item_id, item_data in cart_items:
-        item_data['sub_total'] = Decimal(item_data['quantity']) * Decimal(item_data['price'])
-    print(cart_items, "---")
+    tax_pay = int((total_price/100)*17)
+    grand_total = total_price + tax_pay
+    try:
+        for item_id, item_data in cart_items:
+            item_data['sub_total'] = Decimal(item_data['quantity']) * Decimal(item_data['price'])
+            item = Item.objects.get(pk = int(item_id))
+            item_data['photo'] = item.photo.url
+        print(cart_items, "---")
+        
+    except:
+        messages.error(request, "Not found")
 
-    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
+
+
 
 def clear_cart(request):
     cart = Cart(request)
-    cart.clear()
-    cart_view = about()
-    response = cart_view.get(request)
-        
-    return response
+    try:
+        cart.clear()
+        messages.success(request, "All the items have been cleared")
+    except:
+        messages.error(request,"Cannot clear the cart")
+
+    return redirect('cart_view')
 
 
 @login_required
 def checkout(request):
     cart = Cart(request)
     total_price = cart.get_total()
+    tax_pay = int((total_price/100)*17)
+    grand_total = total_price + tax_pay
+    
     if request.user.is_authenticated and total_price > 0:
         order = cart.create_order(request.user)
         cart.clear()  # Clear the cart after creating the order
         # Implement payment processing here
         order.save()
-        return render(request,'order_details.html', {'order':order, 'total_price': total_price})
+        return render(request,'order_details.html', {'order':order, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
     else:
         return render(request, 'login.html')
+
+
+def removeitem(request):
+    cart = Cart(request)
+    item_id = int(request.POST['item_id'])
+
+    try:
+        item = Item.objects.get(pk = item_id)
+        print(item)
+        cart.remove_item(item)
+        messages.success(request, "Item has been removed from the cart")
+    except:
+        messages.warning(request, "Could not found the item")
+
+    return redirect('cart_view')
+
+
+
+def getItem(request):
+    try:
+        item_id = request.POST["item_id"]
+        item = Item.objects.get(pk=item_id)
+        categories = item.categories.all()
+        return render(request, "itemdetails.html", {'item': item, 'categories': categories})
+    except:
+        return redirect('about')

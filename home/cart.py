@@ -8,7 +8,8 @@ class Cart:
         
     def add_item(self, item, quantity=1):
          
-        item_id = str(item.id)
+        item_id = str(item.pk)
+        print(item_id, "has been added to cart")
         if item_id not in self.cart:
             self.cart[item_id] = {
                 'quantity': 0,
@@ -29,7 +30,8 @@ class Cart:
         self.session.modified = True
         
     def remove_item(self, item):
-        item_id = str(item.id)
+        item_id = str(item.pk)
+        print(item_id, "has been removed from the cart")
         if item_id in self.cart:
             del self.cart[item_id]
             self.save()

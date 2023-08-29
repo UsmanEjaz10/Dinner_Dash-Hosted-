@@ -42,6 +42,10 @@
     color: #9a0f39;
 }
 
+.bg-pink{
+    background: #9a0f39;
+}
+
 .redbtn{
     text-align: center;
     letter-spacing: .5px;
@@ -94,4 +98,7 @@
     font-weight: 600;
 }
 
+.w100{
+    width: 100%;
+  }
 
