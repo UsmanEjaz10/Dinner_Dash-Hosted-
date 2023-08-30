@@ -60,19 +60,31 @@ Cart
                         </div>
                       </div>
                       <div class="d-flex flex-row align-items-center">
-                        <div style="width: 50px;">
+                        <div style="width: 20px;">
                           <h5 class="fw-normal mb-0">{{cart_item.quantity}}</h5>
+                        </div>  
+                        <div style="width: 40px;">
+                        <form action="{% url 'remove-quantity' %}" method = "post" class="m-2">
+                          {% csrf_token %}
+                          <input type="hidden" name="item_id" value="{{item_id}}">
+                          <input type="submit" class="btn btn-secondary" value="-">
+                        </form>
+                      </div>
+                      <div style="width: 100px;">
+                        <form action="{% url 'add-quantity' %}" method = "post" class="m-2">
+                          {% csrf_token %}
+                          <input type="hidden" name="item_id" value="{{item_id}}">
+                          <input type="submit" class="btn btn-secondary" value="+">
+                        </form> 
                         </div>
                         <div style="width: 80px;">
                           <h5 class="mb-0">{{cart_item.price}}</h5>
                         </div>
-                        
-                        <form action="{% url 'removeitem' %}" method = "post" class="m-2">
-                          {% csrf_token %}
-                          <input type="hidden" name="item_id" value="{{item_id}}">
-                          <input type="submit" class="btn btn-danger" value="X">
-                        </form>
-
+                        <form action="{% url 'remove-item' %}" method = "post" class="m-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{item_id}}">
+                        <input type="submit" class="btn btn-secondary" value="X">
+                      </form> 
                       </div>
                     </div>
                   </div>
