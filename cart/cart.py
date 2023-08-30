@@ -1,6 +1,8 @@
 from decimal import Decimal
-from home.models import Item
+from Item.models import Item
 from Order.models import Order, OrderItem
+from django.db import transaction
+
 
 class Cart:
     def __init__(self, request):
@@ -55,6 +57,7 @@ class Cart:
     
 
     def create_order(self, user):
+      with transaction.atomic():
         order = Order.objects.create(user=user, status = "ordered")
         for item_id, item_data in self.cart.items():
             item = Item.objects.get(id=int(item_id))
@@ -63,7 +66,7 @@ class Cart:
             if item.quantity == 0:
                 item.is_retired = True
             item.save()
-            OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'])
+            OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'], sub_total = item.price*item_data['quantity'])
         self.clear()
         return order
     

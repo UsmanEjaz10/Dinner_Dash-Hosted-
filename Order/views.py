@@ -1,18 +1,10 @@
 from django.contrib import messages
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from datetime import datetime
-from decimal import Decimal
-from django.views import View
-from home.models import *
+from django.shortcuts import render
+from Item.models import Item
 from Order.models import Order, OrderItem
-from django.contrib.auth.models import User, AnonymousUser
-from django.contrib.auth import authenticate, logout, login
-import pickle
-from sklearn.linear_model import LinearRegression
-from django.core.mail import send_mail, send_mass_mail
 from django.contrib.auth.decorators import login_required
-from home.cart import Cart
-
+from cart.cart import Cart
+from django.shortcuts import redirect
 # Create your views here.
 
 
@@ -24,11 +16,16 @@ def checkout(request, *args):
         grand_total = total_price + tax_pay
     
         if request.user.is_authenticated and total_price > 0:
-            order = cart.create_order(request.user)
-            order.total = grand_total
-            cart.clear() 
-            order.save()
-            return render(request,'order_details.html', {'order':order, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
+            try:
+                order = cart.create_order(request.user)
+                order.total = grand_total
+                cart.clear() 
+                order.save()
+                return render(request,'order_details.html', {'order':order, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
+            except Exception as e:
+                print(e)
+                messages.error(request, "Cannot create an order")
+                return redirect('about')
         else:
             return render(request, 'login.html')
         
@@ -43,7 +40,19 @@ def order_history(request, *args):
 
         return render (request,'orders.html', {'orders':orders})
 
+
 def view_order(request, *args):
     order_id = request.POST['order_id']
     order = Order.objects.get(pk = order_id)
-    return render(request, "order_details.html", {'order': order})
+    order_items = OrderItem.objects.filter(order = order.pk)
+    print("Ordered: ", order_items)
+    return render(request, "order_details.html", {'order': order, 'order_items': order_items})
+
+
+def change_status(request):
+     order_id = request.POST['order_id']
+     status = request.POST['status']
+     order = Order.objects.get(pk = order_id)
+     order.status = status
+     order.save()
+     return redirect('home')

@@ -1,6 +1,5 @@
-from django.contrib import admin
 from django.urls import path
-from home import views
+from cart import views
 
 urlpatterns = [
     path("addItem", views.add_to_cart1, name="addItem"),

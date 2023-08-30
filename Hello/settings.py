@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Item.apps.ItemConfig',
     'cart.apps.CartConfig',
     'Order.apps.OrderConfig',
     'home.apps.HomeConfig',

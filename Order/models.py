@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from home.models import Item
+from Item.models import Item
 
 
 class Order(models.Model):
@@ -23,6 +23,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+    sub_total = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.item.title} x{self.quantity} in Order {self.order.pk}"

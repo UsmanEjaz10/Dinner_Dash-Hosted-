@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About
+{% endblock title %}
+
+{% block head%}
+
+
+<!-- category_form.html -->
+
+<h1>{% if request.resolver_match.url_name == 'category-create' %}Create{% else %}Update{% endif %} Category</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>

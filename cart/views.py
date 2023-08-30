@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from decimal import Decimal
-from home import views 
-from home.models import Item
+from Item import views
+from Item.models import Item
 from cart.cart import Cart
 
 
@@ -17,7 +17,7 @@ def add_to_cart1(request):
     else:
         messages.info(request, "Sorry the item is not available at this moment.")
     
-    item_list = views.about()
+    item_list = views.Item_Handler()
     response = item_list.get(request)
         
     return response

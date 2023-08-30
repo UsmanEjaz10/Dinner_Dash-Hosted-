@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About
+{% endblock title %}
+
+
+{% block body%}
+
+
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Order Id</th>
+                <th scope="col">User Id</th>
+                <th scope="col">Order Time</th>
+                <th scope="col">Price Rs.</th>
+                <th scope="col">Status</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders%}
+            <tr>
+                <td>{{order.pk}}</td>
+                <td>{{order.user.pk}}</td>
+                <td>{{order.created_at}}</td>
+                <td>{{order.total}}</td>      
+                <td>
+                    <a class="nav-link  dropdown-toggle mt-3 me-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{order.status}}
+                    </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    
+                {% if status_choices%}
+                    {% for choice in status_choices %}
+                        {% if order.status == 'Completed' and choice.1 == 'Cancelled' %}
+                        {% else%}
+                            {% if order.status == 'Ordered' and choice.1 == 'Completed'%}
+                                {%else%}
+                                    {% if order.status == 'Paid' and choice.1 == 'Ordered'%}
+                                        {% else%}
+                            <li><form action="{% url 'changestatus'%}" method="post" class="w100">
+                                {% csrf_token %}
+                                    <input type="hidden" value="{{order.pk}}" name = "order_id" >
+                                    <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" name="status" value="{{choice.1}}">
+                            </form></li>
+                                {%endif%}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {%endif %}
+
+                    </ul>
+                </td>
+                <td><form action="{% url 'vieworder' %}" method = "post" class="m-2">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{order.pk}}">
+                    <input type="submit" class="btn btn-danger" value="View">
+                </form><td>
+                
+            </tr>
+            {% endfor%}
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock body%}

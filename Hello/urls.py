@@ -24,13 +24,15 @@ import os
 admin.site.site_header="U_Subscribe Admin"
 admin.site.site_title="Admin Portal"
 admin.site.index_title="Welcome to U_Subscribe Admin Portal"
-#C Changes completed
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
-    path('', include('Order.urls'))
+    path('', include('Order.urls')),
+    path('', include('cart.urls')),
+    path('', include('Item.urls')),
 ]
 
 
