@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Categories
+{% endblock title %}
+
+{% block head%}
+{% endblock head%}
+{% block body%}
+
+
+<div class="d-flex justify-content-end m-3 me-5">
+    <a href="{% url 'user-create' %}" class="btn btn-success">Create A New User</a>
+</div>
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <th scope="col">User id</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Superuser</th>
+        </thead>
+        <tbody>
+            {% for user in object_list%}
+            <tr>
+                <td>{{user.pk}}</td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.is_superuser}}</td> 
+            </tr>
+            {%endfor%}
+        </tbody>
+{% endblock body%}

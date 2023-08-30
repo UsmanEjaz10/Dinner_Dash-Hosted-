@@ -8,21 +8,36 @@
 {% endblock head%}
 {% block body%}
 
+
+<div class="d-flex justify-content-end m-3 me-5">
+    <a href="{% url 'item-create' %}" class="btn btn-success">Create Item</a>
+</div>
+
+
 <div class="container">
     <table class="table">
         <thead>
             <th scope="col">Item id</th>
             <th scope="col">Title</th>
             <th scope="col">Available Quantity</th>
-            <th scope="col"></th>
-            
+            <th scope="col">Price</th>
+            <th scope="col">Retired</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
             
         </thead>
         <tbody>
-            {% for category in object_list%}
+            {% for item in object_list%}
             <tr>
-                <td>{{category.name}}</td>
-                <td><a href="{% url 'category-update' category.pk %}">Update</a></td>
+                <td>{{item.pk}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.is_retired}}</td>                
+                <td><a href="{% url 'item-update' item.pk %}" class="btn pinkcolorbtn">Update</a></td>
+                <td><form method="POST" action="{% url 'item-delete' item.pk %}">
+                    {% csrf_token %}<input type="submit" value="Delete" class="btn btn-danger">
+                 </form></td>
             </tr>
             {%endfor%}
         </tbody>

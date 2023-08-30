@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User
+{% endblock title %}
+
+{% block body%}
+
+<h3 class="text-center m-3">{% if request.resolver_match.url_name == 'user-create' %}Signup{% else %}Update{% endif %} Details</h3>
+
+<div class="m-5">
+
+    <form method="post">
+        {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn pinkcolorbtn w-100 w100 mb-5">Save</button>
+    </form>
+</div>
+{% endblock body%}

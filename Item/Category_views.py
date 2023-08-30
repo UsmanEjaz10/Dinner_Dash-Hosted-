@@ -10,20 +10,23 @@ from django.urls import reverse_lazy
 
 class CategoryListView(ListView):
     model = Category
-    template_name = 'Category_List.html'  # Template to display category list
+    template_name = 'Category_List.html'  
 
 class CategoryCreateView(CreateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'Category_Form.html'  # Template for category creation
+    success_url = reverse_lazy('category-list')
+    template_name = 'Category_Form.html'  
 
 class CategoryUpdateView(UpdateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'Category_Form.html'  # Template for category update
+    template_name = 'Category_Form.html'  
     success_url = reverse_lazy('category-list')
 
 class CategoryDeleteView(DeleteView):
     model = Category
     success_url = reverse_lazy('category-list')
 
+    def get_success_url(self):
+        return self.success_url

@@ -53,18 +53,14 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link pinkcolorbtn" href="/about">Items</a>
-                {% endif%}
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link pinkcolorbtn" href="{% url 'cart_view' %}" >
                   Cart
                 </a>
-                
+                {% endif%} 
               </li>
-              <li class="nav-item">
-                <a class="nav-link pinkcolorbtn" href="{% url 'history' %}">Orders</a>
-              </li>
-
+            
               {% if user.is_superuser%}
               <li class="nav-item">
                 <a class="nav-link pinkcolorbtn" href="{%url 'category-list' %}">Categories</a>
@@ -72,7 +68,23 @@
               <li class="nav-item">
                 <a class="nav-link pinkcolorbtn" href="{%url 'item-list' %}">Items</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link pinkcolorbtn" href="{%url 'user-list' %}">Users</a>
+              </li>
               {% endif %}
+              {% if user.is_authenticated%}
+              <li class="nav-item">
+                <a class="nav-link pinkcolorbtn" href="{% url 'history' %}">Orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pinkcolorbtn" href="{%url 'user-update' user.pk %}">Edit Personal Details</a>
+              </li>
+              {% endif%}
+              {% if user.is_authenticated == False%}
+              <li class="nav-item">
+                <a class="nav-link pinkcolorbtn" href="/login">Login</a>
+              </li>
+              {% endif%}
               <li class="nav-item">
                 <a class="nav-link pinkcolorbtn" href="/logout">Logout</a>
               </li>

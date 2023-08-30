@@ -6,7 +6,9 @@ from Order.models import Order
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
-
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .forms import UserForm
 
 
 # Create your views here.
@@ -26,9 +28,9 @@ class index(View):
         if request.user.is_superuser:
             orders = Order.objects.all()
             status_choices  = Order.STATUS_CHOICES
-            return render(request, "Admin_Index.html", {'orders': orders, 'status_choices': status_choices})
+            return render(request, "Admin_Index.html", {'orders': orders, 'status_choices': status_choices, 'user': request.user})
         else:
-            return render(request, "home.html")
+            return render(request, "home.html", {'user': request.user})
 
 
 
@@ -84,3 +86,27 @@ def checkout(request):
         return render(request,'order_details.html', {'order':order, 'total_price': total_price, 'tax_pay': tax_pay, 'gt': grand_total})
     else:
         return render(request, 'login.html')
+
+
+class UserListView(ListView):
+    model = User
+    template_name = 'User_List.html' 
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserForm
+    template_name = 'User_Form.html' 
+    success_url = reverse_lazy('home')
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'User_Form.html' 
+    success_url = reverse_lazy('home')
+
+
+class UserDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('user-list')
+
