@@ -68,27 +68,22 @@ def removeitem(request):
 
     return redirect('cart_view')
 
-
 def remove_quantity(request):
     cart = Cart(request)
     item_id = int(request.POST['item_id'])
-
     try:
         item = Item.objects.get(pk = item_id)
         cart.remove_quantity(item)
     except Exception as e:
         print(e)
-
     return redirect('cart_view')
-
+       
 def add_quantity(request):
     cart = Cart(request)
     item_id = int(request.POST['item_id'])
-
     try:
         item = Item.objects.get(pk = item_id)
         cart.add_quantity(item)
     except Exception as e:
         print(e)
-
     return redirect('cart_view')
