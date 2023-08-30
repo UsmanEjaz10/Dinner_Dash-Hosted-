@@ -82,6 +82,9 @@
               {% endif%}
               {% if user.is_authenticated == False%}
               <li class="nav-item">
+                <a class="nav-link pinkcolorbtn" href="{%url 'user-create' %}">SignUp</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link pinkcolorbtn" href="/login">Login</a>
               </li>
               {% endif%}
