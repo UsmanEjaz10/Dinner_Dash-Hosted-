@@ -4,9 +4,7 @@
     About
 {% endblock title %}
 
-{% block head%}
-
-
+{% block body%}
 <!-- category_form.html -->
 
 <h1>{% if request.resolver_match.url_name == 'category-create' %}Create{% else %}Update{% endif %} Category</h1>
@@ -16,3 +14,5 @@
   {{ form.as_p }}
   <button type="submit">Save</button>
 </form>
+
+{% endblock body%}
