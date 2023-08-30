@@ -1,7 +1,9 @@
+"""Module providingFunction for Decimal conversion"""
 from decimal import Decimal
+from django.db import transaction
 from Item.models import Item
 from Order.models import Order, OrderItem
-from django.db import transaction
+
 
 
 class Cart:
@@ -36,6 +38,22 @@ class Cart:
             del self.cart[item_id]
             self.save()
 
+    def remove_quantity(self, item):
+        item_id = str(item.pk)
+        print(item_id, "has been removed from the cart")
+        if item_id in self.cart:
+            if self.cart[item_id]['quantity'] > 1:
+                self.cart[item_id]['quantity'] -= 1 
+                self.save()
+
+    def add_quantity(self, item):
+        item_id = str(item.pk)
+        print(item_id, "has been removed from the cart")
+        if item_id in self.cart:
+            if self.cart[item_id]['quantity'] < item.quantity:
+                self.cart[item_id]['quantity'] += 1 
+                self.save()
+
     def get_items(self):
         return self.cart.items()
 
@@ -57,16 +75,16 @@ class Cart:
     
 
     def create_order(self, user):
-      with transaction.atomic():
-        order = Order.objects.create(user=user, status = "ordered")
-        for item_id, item_data in self.cart.items():
-            item = Item.objects.get(id=int(item_id))
-            print(item_data)
-            item.quantity = item.quantity - int(item_data['quantity'])
-            if item.quantity == 0:
-                item.is_retired = True
-            item.save()
-            OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'], sub_total = item.price*item_data['quantity'])
-        self.clear()
-        return order
+        with transaction.atomic():
+            order = Order.objects.create(user=user, status = "ordered")
+            for item_id, item_data in self.cart.items():
+                item = Item.objects.get(id=int(item_id))
+                print(item_data)
+                item.quantity = item.quantity - int(item_data['quantity'])
+                if item.quantity == 0:
+                    item.is_retired = True
+                item.save()
+                OrderItem.objects.create(order=order, item=item, quantity=item_data['quantity'], sub_total = item.price*item_data['quantity'])
+            self.clear()
+            return order
     
