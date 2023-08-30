@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class HomeConfig(AppConfig):
+class UserConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'home'
+    name = 'User'
 
     def ready(self):
-        import home.signals
+        import User.signals

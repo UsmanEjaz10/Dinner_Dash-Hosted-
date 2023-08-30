@@ -21,15 +21,15 @@ import os
 
 
 # Changing Admin Login Panel 
-admin.site.site_header="U_Subscribe Admin"
+admin.site.site_header="Resturant Admin"
 admin.site.site_title="Admin Portal"
-admin.site.index_title="Welcome to U_Subscribe Admin Portal"
+admin.site.index_title="Welcome to Admin Portal"
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
+    path('', include('User.urls')),
     path('', include('Order.urls')),
     path('', include('cart.urls')),
     path('', include('Item.urls')),

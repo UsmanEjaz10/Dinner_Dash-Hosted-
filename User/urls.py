@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from home import views
+from User import views
 
 urlpatterns = [
     # if any url comes with '' (blank) path send it to views.index
