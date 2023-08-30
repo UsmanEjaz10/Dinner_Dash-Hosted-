@@ -16,6 +16,10 @@ class UserForm(UserCreationForm):
             field.widget.attrs.update({'class': 'form-control m-3 form-floating '})  
             field.help_text=''
 
+        if not self.instance.is_superuser:
+            print(self.instance.username, " = ", self.instance.is_superuser)
+            self.fields['is_superuser'].widget = forms.HiddenInput()
+
         self.fields['is_superuser'].widget.attrs.update({'class': 'form-check-input'})
         self.fields['username'].required = False  
         
