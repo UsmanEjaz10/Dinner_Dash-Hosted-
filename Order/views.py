@@ -76,7 +76,12 @@ def change_status(request):
 
 
 def order_by_status(request):
-    """Retrieves orders by status type"""
+    """
+    The function retrieves orders from the database based on the specified status and renders them along
+    with the status choices and user information in the Admin_Index.html template.
+    :return: a rendered HTML template called "Admin_Index.html" with the following context variables:
+    "orders", "status_choices", "user", and "status".
+    """
     with transaction.atomic():
         status = request.POST["status_name"]
         orders = Order.objects.filter(status=status)

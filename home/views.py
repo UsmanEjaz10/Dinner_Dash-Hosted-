@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.contrib.auth import authenticate, logout, login
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -38,22 +39,23 @@ class Authenticate(View):
 def user_login(request):
     """login function to authenticate user"""
     if request.method == "POST":
-        print("POST request recieved")
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(username=username, password=password)
+        with transaction.atomic():
+            print("POST request recieved")
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            user = authenticate(username=username, password=password)
 
-        print("User authentication method is called")
+            print("User authentication method is called")
 
-        if user is not None:
-            login(request, user)
-            obj = User.objects.get(username=username)
-            per = obj.get_all_permissions()
-            print("Permissions allocated are: ", per, user)
-            return redirect("home")
-        else:
-            messages.warning(request, "Invalid username or password")
-            return render(request, "login.html")
+            if user is not None:
+                login(request, user)
+                obj = User.objects.get(username=username)
+                per = obj.get_all_permissions()
+                print("Permissions allocated are: ", per, user)
+                return redirect("home")
+            else:
+                messages.warning(request, "Invalid username or password")
+                return render(request, "login.html")
     return render(request, "login.html")
 
 
