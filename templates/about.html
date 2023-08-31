@@ -58,9 +58,11 @@
     {% for item in items%}
     <div class="col-md-4">
       <div class="card mb-4 box-shadow">
+        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light shadow-1-strong rounded" data-mdb-ripple-color="light">
         {% if item.photo %}
         <img class="card-img-top item-image" src="{{item.photo.url}}" alt="Card image cap">
         {% endif%}
+        </div>
         <div class="card-body">
             <div class="row mb-3">
           <h3 class="pinkhead">{{item.title}}</h3>
@@ -89,7 +91,7 @@
     <form action="/addItem" method="post" class="w100">
     {% csrf_token %}
     <input type="hidden" value="{{item.pk}}" name = "item_id" >
-    <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="Add to Cart">
+    <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="Add to Cart +">
   </form>
 </div>
       </div>
