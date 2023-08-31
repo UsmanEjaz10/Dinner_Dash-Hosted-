@@ -15,7 +15,7 @@
 
 
 <div class="container">
-    <table class="table">
+    <table class="table table-responsive table-stripped table-hover">
         <thead>
             <th scope="col">User id</th>
             <th scope="col">First name</th>
@@ -26,8 +26,12 @@
         </thead>
         <tbody>
             {% for user in object_list%}
-            <tr>
-                <td>{{user.pk}}</td>
+            {% if user.is_superuser%}
+            <tr class="p-2 table-success">
+            {%else%}
+            <tr class="p-2">
+            {%endif%}
+                <th scope="row">{{user.pk}}</th>
                 <td>{{user.first_name}}</td>
                 <td>{{user.last_name}}</td>
                 <td>{{user.username}}</td>

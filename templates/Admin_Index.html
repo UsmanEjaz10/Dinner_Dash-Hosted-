@@ -56,7 +56,13 @@
         </thead>
         <tbody>
             {% for order in orders%}
-            <tr>
+            {% if order.status == "Cancelled"%}
+            <tr class="p-2 table-danger">
+            {% elif order.status == "Completed"%}
+                <tr class="p-2 table-success">
+            {%else%}
+            <tr class="p-2">
+            {%endif%}
                 <td class="text-center">{{order.pk}}</td>
                 <td class="text-center">{{order.user.pk}}</td>
                 <td>{{order.user.first_name}} {{order.user.last_name}} </td>
@@ -76,11 +82,14 @@
                                 {%else%}
                                     {% if order.status == 'Paid' and choice.1 == 'Ordered'%}
                                         {% else%}
+                                        {% if order.status == 'Completed'%}
+                                        {%else%}
                             <li><form action="{% url 'changestatus'%}" method="post" class="w100">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{order.pk}}" name = "order_id" >
                                     <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" name="status" value="{{choice.1}}">
                             </form></li>
+                            {%endif%}
                                 {%endif%}
                             {% endif %}
                         {% endif %}
@@ -101,11 +110,6 @@
         </tbody>
     </table>
 </div>
-
-
-
-
-
 
 
 {% endblock body%}

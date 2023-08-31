@@ -15,8 +15,8 @@
 
 
 <div class="container">
-    <table class="table">
-        <thead>
+    <table class="table table-responsive table-stripped table-hover">
+        <thead class="thead-dark">
             <th scope="col">Item id</th>
             <th scope="col">Title</th>
             <th scope="col">Available Quantity</th>
@@ -28,13 +28,17 @@
         </thead>
         <tbody>
             {% for item in object_list%}
-            <tr>
-                <td>{{item.pk}}</td>
+            {% if item.is_retired%}
+            <tr class="p-2 table-danger">
+            {%else%}
+            <tr class="p-2">
+            {%endif%}
+            <th scope="row">{{item.pk}}</th>
                 <td>{{item.title}}</td>
-                <td>{{item.quantity}}</td>
+                <td  class="text-center">{{item.quantity}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.is_retired}}</td>                
-                <td><a href="{% url 'item-update' item.pk %}" class="btn pinkcolorbtn"><i class="bi bi-trash"></i></a></td>
+                <td><a href="{% url 'item-update' item.pk %}" class="btn pinkcolorbtn"><i class="bi bi-pen"></i></a></td>
                 <td><form method="POST" action="{% url 'item-delete' item.pk %}">
                     {% csrf_token %}<button type="submit" class="btn btn-danger">
                         <i class="bi bi-trash"></i>
@@ -43,4 +47,8 @@
             </tr>
             {%endfor%}
         </tbody>
+
+        <script>
+
+        </script>
 {% endblock body%}
