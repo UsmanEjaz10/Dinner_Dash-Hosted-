@@ -6,6 +6,13 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control m-3 form-floating '}) 
+
+
+
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item

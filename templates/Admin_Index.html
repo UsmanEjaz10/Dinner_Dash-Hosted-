@@ -14,10 +14,11 @@
 
 {% block body%}
 
-
+<div class="carousel-item active" style="background: url('/static/images/dinner_dash.jpg')">
+  
 <div class="d-flex justify-content-end me-5">
     
-    <a class="nav-link  dropdown-toggle mt-3 me-2 redbtn" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link  dropdown-toggle mt-3 me-2 bg-pink text-white redbtn" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         {% if status %}
             {{status}}
         {% else%}
@@ -111,5 +112,5 @@
     </table>
 </div>
 
-
+</div>
 {% endblock body%}

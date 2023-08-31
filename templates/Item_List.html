@@ -8,6 +8,7 @@
 {% endblock head%}
 {% block body%}
 
+<div class="carousel-item active" style="background: url('/static/images/dinner_dash.jpg')">
 
 <div class="d-flex justify-content-end m-3 me-5">
     <a href="{% url 'item-create' %}" class="btn btn-success">Create Item</a>
@@ -47,8 +48,5 @@
             </tr>
             {%endfor%}
         </tbody>
-
-        <script>
-
-        </script>
+    </div>
 {% endblock body%}

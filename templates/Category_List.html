@@ -8,27 +8,33 @@
 {% endblock head%}
 {% block body%}
 
+<div class="carousel-item active" style="background: url('/static/images/dinner_dash.jpg')">
+
 <div class="d-flex justify-content-end m-3 me-5">
     <a href="{% url 'category-create' %}" class="btn btn-success">Create Category</a>
 </div>
 
-<div class="container">
-    <table class="table">
+<div class="container bg-transparent">
+    <table class="table table-hover table-group-divider">
         <thead>
             <th scope="col">Category id</th>
             <th scope="col">Category Name</th>
             <th scope="col">Update</th>
+            <th scope="col">Delete</th>
         </thead>
         <tbody>
             {% for category in object_list%}
             <tr>
                 <td>{{category.pk}}</td>
                 <td>{{category.name}}</td>
-                <td><a href="{% url 'category-update' category.pk %}" class="btn pinkcolorbtn">Update</a></td>
+                <td><a href="{% url 'category-update' category.pk %}" class="btn pinkcolorbtn"><i class="bi bi-pen"></i></a></td>
                 <td><form method="POST" action="{% url 'category-delete' category.pk %}">
-                    {% csrf_token %}<input type="submit" value="Delete" class="btn btn-danger">
+                    {% csrf_token %}<button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </button>
                  </form></td>
             </tr>
             {%endfor%}
         </tbody>
+    </div>
 {% endblock body%}
