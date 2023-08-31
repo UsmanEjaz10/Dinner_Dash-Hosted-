@@ -20,6 +20,7 @@ def checkout(request):
             order = cart.create_order(request.user)
             cart.clear()
             order.save()
+            messages.success(request, "Your order has been placed. Thank you!")
             return render(
                 request,
                 "order_details.html",
