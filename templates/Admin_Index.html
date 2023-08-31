@@ -3,30 +3,65 @@
 {% block title %}
     About
 {% endblock title %}
-
+{% block head%}
+<style>
+    .activenavbar{
+        background-color: #9a0f39;
+        font-weight: 600;
+    }    
+</style>
+{% endblock head%}
 
 {% block body%}
 
 
+<div class="d-flex justify-content-end me-5">
+    
+    <a class="nav-link  dropdown-toggle mt-3 me-2 redbtn" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {% if status %}
+            {{status}}
+        {% else%}
+            All
+        {%endif%}
+    </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    
+    {% if status_choices%}
+    {% for choice in status_choices %}
+        <li><form action="{% url 'order-by-status'%}" method="post" class="w100">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-sm btn-outline-light pinkcolorbtn w100" value="{{choice.1}}" name="status_name">
+        </form></li>
+    {% endfor %}
+    {%endif %}
+    <li><a href="{% url 'home' %}" class="btn btn-danger m-2 me-5">All</a>
+    </li>
+</ul>
+</div>
+
+
+
 <div class="container mt-5">
-    <table class="table">
-        <thead>
+    <table class="table table-responsive table-hover" border="1">
+        <thead bgcolor="red">
             <tr>
-                <th scope="col">Order Id</th>
-                <th scope="col">User Id</th>
-                <th scope="col">Order Time</th>
-                <th scope="col">Price Rs.</th>
-                <th scope="col">Status</th>
-                <th scope="col">Details</th>
+                <th scope="col" class="th-lg">Order Id</th>
+                <th scope="col" class="th-lg">Customer Id</th>
+                <th scope="col" class="th-lg">Customer</th>
+                <th scope="col" class="th-lg">Order Time</th>
+                <th scope="col" class="th-lg">Price Rs.</th>
+                <th scope="col" class="th-lg">Status</th>
+                <th scope="col" class="th-lg">Details</th>
             </tr>
         </thead>
         <tbody>
             {% for order in orders%}
             <tr>
-                <td>{{order.pk}}</td>
-                <td>{{order.user.pk}}</td>
+                <td class="text-center">{{order.pk}}</td>
+                <td class="text-center">{{order.user.pk}}</td>
+                <td>{{order.user.first_name}} {{order.user.last_name}} </td>
                 <td>{{order.created_at}}</td>
-                <td>{{order.total}}</td>      
+                <td >{{order.total}}</td>      
                 <td>
                     <a class="nav-link  dropdown-toggle mt-3 me-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{order.status}}
@@ -57,7 +92,7 @@
                 <td><form action="{% url 'vieworder' %}" method = "post" class="m-2">
                     {% csrf_token %}
                     <input type="hidden" name="order_id" value="{{order.pk}}">
-                    <input type="submit" class="btn btn-danger" value="View">
+                    <input type="submit" class="btn pinkcolorbtn" value="View">
                 </form><td>
                 
             </tr>
@@ -66,6 +101,8 @@
         </tbody>
     </table>
 </div>
+
+
 
 
 {% endblock body%}

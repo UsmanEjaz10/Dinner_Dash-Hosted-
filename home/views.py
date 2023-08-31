@@ -12,6 +12,7 @@ from cart.cart import Cart
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import UserForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -31,6 +32,9 @@ class index(View):
         if request.user.is_superuser:
             orders = Order.objects.all()
             status_choices  = Order.STATUS_CHOICES
+            paginator = Paginator(orders, items_per_page)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             return render(request, "Admin_Index.html", {'orders': orders, 'status_choices': status_choices, 'user': request.user})
         else:
             return render(request, "home.html", {'user': request.user})

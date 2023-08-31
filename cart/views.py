@@ -4,6 +4,7 @@ from decimal import Decimal
 from Item import views
 from Item.models import Item
 from cart.cart import Cart
+from django.core.paginator import Paginator
 
 
 def add_to_cart1(request):

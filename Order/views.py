@@ -56,3 +56,10 @@ def change_status(request):
      order.status = status
      order.save()
      return redirect('home')
+
+
+def order_by_status(request):
+     status = request.POST['status_name']
+     orders = Order.objects.filter(status = status)
+     status_choices  = Order.STATUS_CHOICES
+     return render(request, "Admin_Index.html", {'orders': orders, 'status_choices': status_choices, 'user': request.user, 'status':status})

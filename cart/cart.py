@@ -76,7 +76,7 @@ class Cart:
 
     def create_order(self, user):
         with transaction.atomic():
-            order = Order.objects.create(user=user, status = "ordered")
+            order = Order.objects.create(user=user, status = "Ordered")
             for item_id, item_data in self.cart.items():
                 item = Item.objects.get(id=int(item_id))
                 print(item_data)
