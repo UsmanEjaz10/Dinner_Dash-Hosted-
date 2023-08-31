@@ -18,10 +18,11 @@ class Item_Handler(View):
 def getItemsByCategory(request):
         id  = request.POST['category_id']
         category = Category.objects.get(pk = id)
+        name = category.name
         items = Item.objects.filter(categories = category)
         categories = Category.objects.all()
         
-        return render(request, 'about.html', {'items' : items, 'categories': categories})
+        return render(request, 'about.html', {'items' : items, 'categories': categories, 'category': name})
 
 def getItem(request):
     try:
