@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$=#6_q(_!v+jwcf%i8hdf@*6-)6b*i_hk_40=xk#epr1m6owmt
 DEBUG = True 
 
 # Website domain should be in allowed hosts.
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
