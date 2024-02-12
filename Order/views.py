@@ -8,7 +8,7 @@ from Order.models import Order, OrderItem
 from cart.cart import Cart
 
 
-@login_required
+
 def checkout(request):
     """Function uses the login decorator as a user can only checkout if he/she has logged in"""
     with transaction.atomic():
@@ -38,14 +38,15 @@ def checkout(request):
 @login_required
 def order_history(request):
     """Only an authenticated user can see past orders"""
-    with transaction.atomic():
-        requested_user = request.user
-        orders = []
-        try:
-            orders = Order.objects.filter(user=requested_user)
-        except Order.DoesNotExist as exception:
-            print(exception)
-            messages.error(request, "Sorry no order exists")
+    if request.user.is_authenticated:
+        with transaction.atomic():
+            requested_user = request.user
+            orders = []
+            try:
+                orders = Order.objects.filter(user=requested_user)
+            except Order.DoesNotExist as exception:
+                print(exception)
+                messages.error(request, "Sorry no order exists")
     return render(request, "orders.html", {"orders": orders})
 
 
