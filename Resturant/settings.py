@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$=#6_q(_!v+jwcf%i8hdf@*6-)6b*i_hk_40=xk#epr1m6owmt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
 # Website domain should be in allowed hosts.
 ALLOWED_HOSTS = []
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'Resturant.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db1.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -116,6 +117,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #----------------------Adding static directories (shows user all u have in static folder with file name.)--------
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 EMAIL_HOST = 'smtp.gmail.com'
