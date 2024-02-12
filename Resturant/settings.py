@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'Resturant.wsgi.application'
 
 import dj_database_url
 # Sqlite Database
-DATABASES = {'default': dj_database_url.config(default='postgres://lvdpheic:QDvU0Q9TrblEQacoPPCAOm-Ydf3vDS4P@lucky.db.elephantsql.com/lvdpheic')}
+DATABASES = {'default' :dj_database_url.config(default = 'postgres://default:zwKe10qPXyRc@ep-royal-mountain-a4fo85vg-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require')}
 
 
 # Password validation
