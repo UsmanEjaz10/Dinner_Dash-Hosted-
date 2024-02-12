@@ -55,8 +55,8 @@ def user_login(request):
                 return redirect("home")
             else:
                 messages.warning(request, "Invalid username or password")
-                return render(request, "Login.html")
-    return render(request, "Login.html")
+                return render(request, "login.html")
+    return render(request, "login.html")
 
 
 def logout_user(request):
