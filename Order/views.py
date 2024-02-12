@@ -32,7 +32,7 @@ def checkout(request):
                 },
             )
         else:
-            return render(request, "login.html")
+            return render(request, "UserLogin.html")
 
 
 @login_required
