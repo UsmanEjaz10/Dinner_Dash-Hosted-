@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$=#6_q(_!v+jwcf%i8hdf@*6-)6b*i_hk_40=xk#epr1m6owmt
 DEBUG = True 
 
 # Website domain should be in allowed hosts.
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -78,14 +78,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Resturant.wsgi.application'
 
-
+import dj_database_url
 # Sqlite Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {'default': dj_database_url.config(default='postgres://lvdpheic:QDvU0Q9TrblEQacoPPCAOm-Ydf3vDS4P@lucky.db.elephantsql.com/lvdpheic')}
 
 
 # Password validation
